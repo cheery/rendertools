@@ -144,7 +144,7 @@ class vec3(list):
         self[2] = random.random()
         self.normalize(self)
         if scale != 1.0:
-            self.scale(self, self, scale)
+            self.scale(self, scale)
         return self
 
     def transform_mat4(self, a, m):

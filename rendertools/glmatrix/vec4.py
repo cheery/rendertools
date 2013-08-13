@@ -155,7 +155,7 @@ class vec4(list):
         self[3] = random.random()
         self.normalize(self)
         if scale is not None:
-            self.scale(self, self, scale)
+            self.scale(self, scale)
         return self
 
     def transform_mat4(self, a, m):
