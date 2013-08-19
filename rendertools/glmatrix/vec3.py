@@ -165,12 +165,13 @@ class vec3(list):
         x = a[0]; y = a[1]; z = a[2]
         qx = q[0]; qy = q[1]; qz = q[2]; qw = q[3]
 
-        ix = qw * x + qy * z - qz * y,
-        iy = qw * y + qz * x - qx * z,
-        iz = qw * z + qx * y - qy * x,
+        ix = qw * x + qy * z - qz * y
+        iy = qw * y + qz * x - qx * z
+        iz = qw * z + qx * y - qy * x
         iw = -qx * x - qy * y - qz * z
 
         self[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy
         self[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz
         self[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx
+
         return self

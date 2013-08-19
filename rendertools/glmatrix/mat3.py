@@ -1,5 +1,7 @@
 import math
 
+GLMAT_EPSILON = 0.000001
+
 class mat3(list):
     def __init__(self):
         list.__init__(self)
@@ -8,22 +10,21 @@ class mat3(list):
                    0.0, 0.0, 1.0]
 
     def clean(self, v=0.0):
-        self[0] = self[1] = self[2] = self[3] = v
-        self[4] = self[5] = self[6] = self[7] = v
-        self[8] = self[9] = self[10] = self[11] = v
-        self[12] = self[13] = self[14] = self[15] = v
+        self[0] = self[1] = self[2] = v
+        self[3] = self[4] = self[5] = v
+        self[6] = self[7] = self[8] = v
         return self
     
     def from_mat4(self, a):
         self[0] = a[0]
         self[1] = a[1]
         self[2] = a[2]
-        self[3] = a[3]
-        self[4] = a[4]
-        self[5] = a[5]
-        self[6] = a[6]
-        self[7] = a[7]
-        self[8] = a[8]
+        self[3] = a[4]
+        self[4] = a[5]
+        self[5] = a[6]
+        self[6] = a[8]
+        self[7] = a[9]
+        self[8] = a[10]
         return self
 
     def clone(self):
@@ -195,6 +196,44 @@ class mat3(list):
         self[7] = a21
         self[8] = a22
         return self
+
+    def rotate(self, a, rad, axis):
+        x = axis[0]; y = axis[1]; z = axis[2]
+        len = math.sqrt(x * x + y * y + z * z)
+
+        if abs(len) < GLMAT_EPSILON:
+            return None
+        
+        len = 1.0 / len
+        x *= len
+        y *= len
+        z *= len
+
+        s = math.sin(rad)
+        c = math.cos(rad)
+        t = 1.0 - c
+
+        a00 = a[0]; a01 = a[1]; a02 = a[2];
+        a10 = a[3]; a11 = a[4]; a12 = a[5];
+        a20 = a[6]; a21 = a[7]; a22 = a[8];
+
+        b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s
+        b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s
+        b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c
+
+        self[0] = a00 * b00 + a10 * b01 + a20 * b02
+        self[1] = a01 * b00 + a11 * b01 + a21 * b02
+        self[2] = a02 * b00 + a12 * b01 + a22 * b02
+        self[3] = a00 * b10 + a10 * b11 + a20 * b12
+        self[4] = a01 * b10 + a11 * b11 + a21 * b12
+        self[5] = a02 * b10 + a12 * b11 + a22 * b12
+        self[6] = a00 * b20 + a10 * b21 + a20 * b22
+        self[7] = a01 * b20 + a11 * b21 + a21 * b22
+        self[8] = a02 * b20 + a12 * b21 + a22 * b22
+    
+        return self
+
+
 
     def scale(self, a, v):
         x = v[0]; y = v[1]

@@ -49,11 +49,12 @@ class VertexStream(object):
         self.data += buffer(self.vertex)[:]
         self.count += 1
 
-    def draw(self, gpu, mode=gl.TRIANGLES):
+    def draw(self, gpu, mode=gl.TRIANGLES, clear=True):
         gl.bindBuffer(gl.ARRAY_BUFFER, self.vertexbuffer)
         gl.bufferData(gl.ARRAY_BUFFER, len(self.data), self.data, gl.DYNAMIC_DRAW)
         self.vertexformat.enable(gpu)
         gl.drawArrays(mode, 0, self.count)
         self.vertexformat.disable(gpu)
         gl.bindBuffer(gl.ARRAY_BUFFER, 0)
-        self.clear()
+        if clear:
+            self.clear()

@@ -258,3 +258,15 @@ def getFramebufferAttachmentParameter(target, attachment, pname):
 # utility functions
 def floats(data):
     return (gl_float*len(data))(*data)
+
+def uniformVec3(location, vec3):
+    uniform3f(location, *vec3)
+
+def uniformVec4(location, vec4):
+    uniform4f(location, *vec4)
+
+def uniformMat3(location, mat3):
+    uniformMatrix3fv(location, 1, FALSE, floats(mat3))
+
+def uniformMat4(location, mat4):
+    uniformMatrix4fv(location, 1, FALSE, floats(mat4))

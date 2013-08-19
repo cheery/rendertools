@@ -20,7 +20,7 @@ def set_vertex_pointer(program, name, size, kind, normalized, stride, offset):
     if isinstance(program, glsl.Program):
         a = program.attribLoc(name)
     else:
-        a = gl.getAttribLocation(name)
+        a = gl.getAttribLocation(program, name)
     if a >= 0:
         gl.enableVertexAttribArray(a)
         gl.vertexAttribPointer(a, size, kind, normalized, stride, offset)
@@ -29,7 +29,7 @@ def unset_vertex_pointer(program, name):
     if isinstance(program, glsl.Program):
         a = program.attribLoc(name)
     else:
-        a = gl.getAttribLocation(name)
+        a = gl.getAttribLocation(program, name)
     if a >= 0:
         gl.disableVertexAttribArray(a)
 

@@ -11,9 +11,10 @@ class mat4(list):
                    0.0, 0.0, 0.0, 1.0]
 
     def clean(self, v=0.0):
-        self[0] = self[1] = self[2] = v
-        self[3] = self[4] = self[5] = v
-        self[6] = self[7] = self[8] = v
+        self[0] = self[1] = self[2] = self[3] = v
+        self[4] = self[5] = self[6] = self[7] = v
+        self[8] = self[9] = self[10] = self[11] = v
+        self[12] = self[13] = self[14] = self[15] = v
         return self
 
     def clone(a):
